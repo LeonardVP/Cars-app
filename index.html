@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C-Metrics — Clinical Psychology Software</title>
+    <!-- Tailwind CSS v3 CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- GSAP & ScrollTrigger for Cinematic Scrollytelling -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+<style>
+    body {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        background: radial-gradient(circle at center, rgba(32, 74, 86, 0.75) 0%, rgba(15, 23, 42, 0.95) 100%), url('chillhouse.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        overflow-x: hidden;
+    }
+
+    /* Cinematic Glow & Glassmorphism */
+    .cinematic-glass {
+        background: rgba(15, 23, 42, 0.75);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(45, 212, 191, 0.15);
+    }
+
+    .glow-effect {
+        box-shadow: 0 0 50px -10px rgba(20, 184, 166, 0.2);
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #0f172a; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #14b8a6; }
+
+    /* Print Safety Guard: Đảm bảo không ảnh hưởng khi in ấn */
+    @media print {
+        body { background: #fff !important; color: #000 !important; }
+        .cinematic-glass { background: none !important; backdrop-filter: none !important; border: none !important; }
+    }
+</style>
+</head>
+<body class="min-h-screen text-slate-100 flex flex-col justify-between selection:bg-teal-500 selection:text-white">
+
+<!-- ============= TOP NAVBAR (FIXED) ============= -->
+<header class="w-full px-6 lg:px-16 py-5 flex items-center justify-between border-b border-teal-700/20 fixed top-0 left-0 right-0 z-50 cinematic-glass transition-all duration-300">
+<!-- Logo bên trái -->
+<a href="Home.html" class="flex items-center space-x-3 group cursor-pointer">
+    <div class="w-10 h-10 rounded-full border-2 border-teal-300/40 flex items-center justify-center bg-teal-900/40 backdrop-blur-md group-hover:scale-105 transition-transform">
+        <span class="text-teal-300 text-lg font-bold font-display">C</span>
+    </div>
+    <span class="text-white text-xl font-bold tracking-tight group-hover:text-teal-300 transition-colors">C-Metrics</span>
+</a>
+    <!-- Nav Links (Desktop) ở giữa -->
+<nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-teal-100/90">
+    <!-- Đưa gạch chân active vào Trang chủ -->
+    <a href="index.html" class="hover:text-white transition-colors text-white font-semibold border-b border-teal-400 pb-0.5">Trang chủ</a>
+    
+    <!-- Các mục khác để dạng bình thường -->
+    <a href="founder.html" class="hover:text-white transition-colors">Về người sáng lập</a>
+    <a href="Features.html" class="hover:text-white transition-colors">Features</a>
+    <a href="Contact.html" class="hover:text-white transition-colors">Contact</a>
+    <a href="Settings.html" class="hover:text-white transition-colors">Settings</a>
+</nav>
+    <!-- CTA Button ở bên phải -->
+    <div>
+        <a href="login.html" class="px-5 py-2.5 rounded-full bg-teal-500/10 hover:bg-teal-500/25 text-teal-300 text-sm font-medium border border-teal-500/30 backdrop-blur-3xl transition-all shadow-sm hover:shadow">
+            Đăng Nhập / Login
+        </a>
+    </div>
+</header>
+
+
+    <!-- HERO SECTION WITH SCROLLYTELLING & PARALLAX -->
+    <main class="flex-grow flex items-center px-6 lg:px-16 py-12 relative">
+        <!-- Decorative Ambient Light Orbs -->
+        <div class="absolute top-1/4 left-10 w-72 h-72 bg-teal-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-10 right-10 w-96 h-96 bg-cyan-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
+            
+            <!-- LEFT COLUMN: Scrollytelling Content -->
+            <div class="lg:col-span-5 space-y-6 text-left hero-text-content">
+                <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-teal-900/60 border border-teal-600/40 text-teal-200 text-xs font-semibold uppercase tracking-wider shadow-inner">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span>Clinical Psychology Assistant</span>
+                </div>
+
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-[1.15]">
+                    C-METRICS
+                </h1>
+
+                <p class="text-teal-100/80 text-base sm:text-lg leading-relaxed max-w-lg font-normal">
+                    Trợ lý lâm sàng thông minh chuyên sâu, tối ưu hóa biểu đồ tiến trình và đánh giá hành vi chuẩn hóa cho chuyên gia.
+                </p>
+
+                <div class="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center space-y-3 sm:space-y-0 sm:space-x-4">
+                    <a href="about.html" class="px-7 py-3.5 rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold text-sm shadow-xl hover:shadow-teal-500/25 transition-all flex items-center justify-center space-x-2 group">
+                        <span>Khám phá phần mềm</span>
+                        <i class="fa-solid fa-arrow-right text-xs group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                    <button class="px-7 py-3.5 rounded-xl bg-slate-900/60 hover:bg-slate-900 text-white font-semibold text-sm border border-teal-600/30 transition-all flex items-center justify-center space-x-2 backdrop-blur-sm">
+                        <i class="fa-regular fa-circle-play text-teal-400"></i>
+                        <span>Xem Demo</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN: Cinematic Interface Mockup with Parallax effect -->
+            <div class="lg:col-span-7 hero-mockup-wrapper">
+                <div class="relative mx-auto max-w-3xl rounded-2xl cinematic-glass p-3 sm:p-4 shadow-2xl glow-effect border border-teal-500/20">
+                    
+                    <!-- Laptop Top Bar Controls -->
+                    <div class="flex items-center justify-between pb-3 border-b border-slate-800/80 px-2">
+                        <div class="flex items-center space-x-2">
+                            <span class="w-3 h-3 rounded-full bg-rose-500/80"></span>
+                            <span class="w-3 h-3 rounded-full bg-amber-500/80"></span>
+                            <span class="w-3 h-3 rounded-full bg-emerald-500/80"></span>
+                        </div>
+                        <div class="bg-slate-900/80 px-3 py-1 rounded-md text-xs text-slate-300 font-medium border border-slate-700/50">
+                            <i class="fa-solid fa-shield-halved text-teal-400 mr-1"></i> C-Metrics Workspace
+                        </div>
+                        <div class="flex items-center space-x-2 text-slate-400 text-xs">
+                            <span>Dr. Sarah</span>
+                            <div class="w-6 h-6 rounded-full bg-teal-600 text-white flex items-center justify-center font-bold text-[10px] shadow-sm">SJ</div>
+                        </div>
+                    </div>
+
+                    <!-- Inner App Card -->
+                    <div class="bg-slate-900/90 rounded-xl mt-3 p-4 sm:p-6 text-slate-100 shadow-inner border border-slate-800">
+                        
+                        <!-- Header inside App -->
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-800 gap-3">
+                            <div>
+                                <h3 class="text-base font-bold text-white flex items-center space-x-2">
+                                    <span>15 Item Behavioral Matrix</span>
+                                    <span class="text-xs bg-teal-950 text-teal-300 px-2 py-0.5 rounded-full font-semibold border border-teal-800">Active</span>
+                                </h3>
+                                <p class="text-xs text-slate-400">Clinical psychological tracking and metric analysis</p>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <button class="px-3 py-1.5 bg-slate-800 text-slate-300 rounded-lg text-xs font-semibold hover:bg-slate-700 border border-slate-700">
+                                    <i class="fa-solid fa-filter text-[10px] mr-1 text-teal-400"></i> Metrics
+                                </button>
+                                <button class="px-3 py-1.5 bg-teal-600 text-white rounded-lg text-xs font-semibold hover:bg-teal-500 shadow-sm shadow-teal-600/30">
+                                    <i class="fa-solid fa-plus text-[10px] mr-1"></i> New Client
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Grid for Matrix & Chart -->
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-4 mt-4">
+                            
+                            <!-- Behavioral Matrix Table (7 cols) -->
+                            <div class="md:col-span-7 bg-slate-950/60 rounded-xl p-3 border border-slate-800">
+                                <div class="text-xs font-bold text-slate-300 mb-2 flex justify-between items-center">
+                                    <span>Observation Checklist</span>
+                                    <span class="text-[10px] text-teal-400 font-mono">15 items loaded</span>
+                                </div>
+                                <table class="w-full text-left text-xs">
+                                    <thead>
+                                        <tr class="text-slate-500 border-b border-slate-800">
+                                            <th class="pb-2 font-semibold">#</th>
+                                            <th class="pb-2 font-semibold">Item</th>
+                                            <th class="pb-2 font-semibold text-center">Trend</th>
+                                            <th class="pb-2 font-semibold text-center">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-slate-800/60 text-slate-300">
+                                        <tr class="hover:bg-slate-900/50 transition-colors">
+                                            <td class="py-2 text-slate-500">01</td>
+                                            <td class="py-2 font-medium text-slate-200">Affect Regulation</td>
+                                            <td class="py-2 text-center"><i class="fa-solid fa-arrow-trend-up text-emerald-400"></i></td>
+                                            <td class="py-2 text-center"><span class="w-2 h-2 rounded-full bg-emerald-400 inline-block shadow-[0_0_8px_#34d399]"></span></td>
+                                        </tr>
+                                        <tr class="hover:bg-slate-900/50 transition-colors">
+                                            <td class="py-2 text-slate-500">02</td>
+                                            <td class="py-2 font-medium text-slate-200">Cognitive Flexibility</td>
+                                            <td class="py-2 text-center"><i class="fa-solid fa-arrow-trend-up text-emerald-400"></i></td>
+                                            <td class="py-2 text-center"><span class="w-2 h-2 rounded-full bg-emerald-400 inline-block shadow-[0_0_8px_#34d399]"></span></td>
+                                        </tr>
+                                        <tr class="hover:bg-slate-900/50 transition-colors">
+                                            <td class="py-2 text-slate-500">03</td>
+                                            <td class="py-2 font-medium text-slate-200">Sustained Attention</td>
+                                            <td class="py-2 text-center"><i class="fa-solid fa-minus text-amber-400"></i></td>
+                                            <td class="py-2 text-center"><span class="w-2 h-2 rounded-full bg-amber-400 inline-block"></span></td>
+                                        </tr>
+                                        <tr class="hover:bg-slate-900/50 transition-colors">
+                                            <td class="py-2 text-slate-500">04</td>
+                                            <td class="py-2 font-medium text-slate-200">Peer Empathy Index</td>
+                                            <td class="py-2 text-center"><i class="fa-solid fa-arrow-trend-up text-emerald-400"></i></td>
+                                            <td class="py-2 text-center"><span class="w-2 h-2 rounded-full bg-emerald-400 inline-block shadow-[0_0_8px_#34d399]"></span></td>
+                                        </tr>
+                                        <tr class="hover:bg-slate-900/50 transition-colors">
+                                            <td class="py-2 text-slate-500">05</td>
+                                            <td class="py-2 font-medium text-slate-200">Stress Tolerance</td>
+                                            <td class="py-2 text-center"><i class="fa-solid fa-arrow-trend-up text-emerald-400"></i></td>
+                                            <td class="py-2 text-center"><span class="w-2 h-2 rounded-full bg-emerald-400 inline-block shadow-[0_0_8px_#34d399]"></span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Longitudinal Progress Chart (5 cols) -->
+                            <div class="md:col-span-5 bg-slate-950/60 rounded-xl p-3 border border-slate-800 flex flex-col justify-between">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-xs font-bold text-slate-300">Longitudinal progress chart</span>
+                                    <span class="text-[10px] bg-emerald-950 text-emerald-300 px-1.5 py-0.5 rounded font-bold border border-emerald-800">+24.5%</span>
+                                </div>
+                                
+                                <!-- SVG Chart -->
+                                <div class="py-2 relative h-32 flex items-end">
+                                    <svg class="w-full h-full overflow-visible" viewBox="0 0 200 100" preserveAspectRatio="none">
+                                        <defs>
+                                            <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+                                                <stop offset="0%" stop-color="#14b8a6" stop-opacity="0.45"/>
+                                                <stop offset="100%" stop-color="#14b8a6" stop-opacity="0.0"/>
+                                            </linearGradient>
+                                        </defs>
+                                        <path d="M 0 85 L 30 60 L 70 72 L 110 52 L 150 58 L 200 15 L 200 100 L 0 100 Z" fill="url(#chartGrad)"/>
+                                        <path d="M 0 85 L 30 60 L 70 72 L 110 52 L 150 58 L 200 15" fill="none" stroke="#14b8a6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <circle cx="30" cy="60" r="3" fill="#0f172a" stroke="#14b8a6" stroke-width="2"/>
+                                        <circle cx="70" cy="72" r="3" fill="#0f172a" stroke="#14b8a6" stroke-width="2"/>
+                                        <circle cx="110" cy="52" r="3" fill="#0f172a" stroke="#14b8a6" stroke-width="2"/>
+                                        <circle cx="150" cy="58" r="3" fill="#0f172a" stroke="#14b8a6" stroke-width="2"/>
+                                        <circle cx="200" cy="15" r="4.5" fill="#14b8a6" stroke="#ffffff" stroke-width="2"/>
+                                    </svg>
+                                </div>
+
+                                <div class="flex justify-between text-[10px] text-slate-400 pt-1 border-t border-slate-800 font-mono">
+                                    <span>Oct '23</span>
+                                    <span>Jan '24</span>
+                                    <span>Apr '24</span>
+                                    <span>Sep '24</span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="w-full px-6 lg:px-16 py-6 border-t border-teal-700/20 cinematic-glass flex flex-col sm:flex-row items-center justify-between text-xs text-teal-200/70 z-20">
+        <p>&copy; 2026 C-Metrics Project. All rights reserved.</p>
+        <div class="flex items-center space-x-6 mt-3 sm:mt-0">
+            <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+            <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
+            <a href="#" class="hover:text-white transition-colors">Security</a>
+        </div>
+    </footer>
+
+    <!-- GSAP Scrollytelling & Parallax Animation Script -->
+    <script>
+        document.addEventListener("DOMContentLoaded", (event) => {
+            gsap.registerPlugin(ScrollTrigger);
+
+            // 1. Scrollytelling Entrance Animation cho khối nội dung trái
+            gsap.from(".hero-text-content > *", {
+                scrollTrigger: {
+                    trigger: ".hero-text-content",
+                    start: "top 80%",
+                    toggleActions: "play none none reverse"
+                },
+                y: 40,
+                opacity: 0,
+                duration: 1,
+                stagger: 0.15,
+                ease: "power3.out"
+            });
+
+            // 2. Cinematic Parallax & Fade-in cho khung mockup bên phải
+            gsap.from(".hero-mockup-wrapper", {
+                scrollTrigger: {
+                    trigger: ".hero-mockup-wrapper",
+                    start: "top 85%",
+                    toggleActions: "play none none reverse"
+                },
+                y: 60,
+                scale: 0.96,
+                opacity: 0,
+                duration: 1.2,
+                ease: "power3.out"
+            });
+        });
+    </script>
+</body>
+</html>

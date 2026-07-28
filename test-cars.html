@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phần Mềm Trợ Lý C-METRICS V1.1 - Workspace Đánh Giá CARS Chuyên Sâu</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        workspace: {
+                            dark: '#0f172a',
+                            mainBg: '#131e29',
+                            card: '#1e293b',
+                            cardLight: '#243244',
+                            border: '#334155',
+                            teal: '#14b8a6',
+                            tealHover: '#0d9488',
+                            accent: '#2dd4bf'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @media print {
+            header, .no-print, #domainsContainer, section:not(:has(#resultModal)), #resultModal.hidden {
+                display: none !important;
+            }
+            body {
+                background: #ffffff !important;
+                color: #000000 !important;
+                margin: 0 !important;
+                padding: 10mm !important;
+                font-family: sans-serif !important;
+            }
+            #resultModal {
+                display: block !important;
+                position: static !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                background: #ffffff !important;
+                color: #000000 !important;
+                border: none !important;
+                box-shadow: none !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+            #resultModal * {
+                background-color: transparent !important;
+                color: #000000 !important;
+                border-color: #cbd5e1 !important;
+                box-shadow: none !important;
+            }
+            #resultModal h3, #resultModal h4, #resultModal strong, #resultModal th {
+                color: #0f172a !important;
+            }
+            table {
+                page-break-inside: avoid;
+            }
+            textarea {
+                border: none !important;
+                resize: none !important;
+                background: transparent !important;
+                color: #000000 !important;
+                padding: 0 !important;
+            }
+        }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #14b8a6; }
+    </style>
+</head>
+<body class="bg-workspace-mainBg text-slate-100 min-h-screen font-sans antialiased flex flex-col">
+
+    <div class="w-full flex flex-col min-h-screen">
+        
+        <header class="bg-workspace-card border-b border-workspace-border sticky top-0 z-40 px-6 py-3 flex justify-between items-center no-print shadow-sm">
+            <div class="flex items-center space-x-4">
+                <a href="workspace.html" title="Về trang chủ" class="flex items-center space-x-2.5 bg-workspace-cardLight hover:bg-workspace-border/70 border border-workspace-border px-3 py-2 rounded-xl transition text-teal-400 hover:text-teal-300 group">
+                    <div class="bg-teal-600 text-white w-8 h-8 rounded-lg flex items-center justify-center shadow-md group-hover:scale-105 transition">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                    </div>
+                    <div class="text-left">
+                        <span class="text-xs font-bold tracking-wider text-slate-100 uppercase block">Home</span>
+                        <span class="text-[10px] text-teal-400 block">TRANG CHỦ</span>
+                    </div>
+                </a>
+                <div class="h-6 w-px bg-workspace-border hidden sm:block"></div>
+                <div>
+                    <h2 class="text-sm font-bold text-slate-100 tracking-wide">PHẦN MỀM TRỢ LÝ C-METRICS V1.1</h2>
+                    <p class="text-xs text-slate-400">Hệ thống đánh giá định lượng hành vi trẻ tự kỷ và theo dõi tiến độ lâm sàng dọc</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-3">
+                <span class="text-xs bg-workspace-cardLight px-3 py-1.5 rounded-full border border-workspace-border text-teal-300 font-medium flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Sẵn sàng lượng giá
+                </span>
+            </div>
+        </header>
+
+        <div class="px-6 mt-4 no-print max-w-7xl mx-auto w-full">
+            <div class="bg-amber-950/40 border border-amber-600/40 rounded-xl p-3 flex flex-wrap items-center justify-between gap-3 text-amber-200 text-xs shadow-sm">
+                <div class="flex items-center space-x-2">
+                    <svg class="w-4 h-4 text-amber-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                    <span><strong>Trạng thái bản nháp:</strong> Dữ liệu form được lưu trữ tự động vào LocalStorage theo thời gian thực.</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <button onclick="restoreDraft()" class="px-2.5 py-1 bg-amber-600 hover:bg-amber-700 text-white rounded-lg font-medium transition shadow-sm">Khôi phục</button>
+                    <button onclick="clearDraft()" class="px-2.5 py-1 bg-red-950 hover:bg-red-900 text-red-300 rounded-lg font-medium transition border border-red-800">Xóa</button>
+                </div>
+            </div>
+        </div>
+
+        <main class="flex-1 p-6 space-y-6 max-w-7xl mx-auto w-full">
+
+            <section class="bg-workspace-card border border-workspace-border rounded-2xl p-6 shadow-sm">
+                <div class="border-b border-workspace-border pb-4 mb-5">
+                    <span class="text-[10px] uppercase font-bold text-teal-400 tracking-wider">Hồ sơ thân chủ</span>
+                    <h3 class="text-xl font-bold text-slate-100 mt-0.5">Bảng Đánh Giá Mức Độ Tự Kỷ Ở Trẻ Em (CARS)</h3>
+                    <p class="text-xs text-slate-400 mt-0.5">Quan sát lâm sàng chuẩn hóa theo 15 lĩnh vực hành vi đặc trưng so với trẻ cùng độ tuổi.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">Họ và tên trẻ</label>
+                        <input type="text" id="childName" placeholder="Nhập họ tên trẻ..." class="w-full bg-workspace-cardLight border border-workspace-border rounded-xl px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-teal-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">Mã số thân chủ</label>
+                        <input type="text" id="childCode" placeholder="VD: HS-2026-001" class="w-full bg-workspace-cardLight border border-workspace-border rounded-xl px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-teal-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">Giới tính</label>
+                        <select id="childGender" class="w-full bg-workspace-cardLight border border-workspace-border rounded-xl px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-teal-500">
+                            <option value="" class="bg-workspace-card">-- Chọn giới tính --</option>
+                            <option value="Nam" class="bg-workspace-card">Nam</option>
+                            <option value="Nữ" class="bg-workspace-card">Nữ</option>
+                            <option value="Khác" class="bg-workspace-card">Khác</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">Ngày sinh</label>
+                        <input type="date" id="childDOB" onchange="calculateAge()" class="w-full bg-workspace-cardLight border border-workspace-border rounded-xl px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-teal-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">Ngày đánh giá</label>
+                        <input type="date" id="evalDate" class="w-full bg-workspace-cardLight border border-workspace-border rounded-xl px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-teal-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">Tuổi thực (Tự động tính)</label>
+                        <input type="text" id="childAge" readonly placeholder="Tự động cập nhật..." class="w-full bg-teal-950/60 border border-teal-800/60 rounded-xl px-3 py-2 text-sm text-teal-300 font-semibold">
+                    </div>
+                    <div class="md:col-span-3">
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">Người đánh giá (Chuyên viên lâm sàng)</label>
+                        <input type="text" id="evaluatorName" placeholder="Họ tên nhà chuyên môn lâm sàng..." class="w-full bg-workspace-cardLight border border-workspace-border rounded-xl px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-teal-500">
+                    </div>
+                </div>
+            </section>
+
+            <section id="domainsContainer" class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Render tự động qua JS -->
+            </section>
+
+            <section class="bg-workspace-card border border-workspace-border rounded-2xl p-5 shadow-xl no-print relative overflow-hidden">
+                <div class="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-teal-500/50 to-transparent"></div>
+                
+                <div class="flex flex-col lg:flex-row items-center justify-between gap-4">
+                    <div class="flex items-center space-x-3 text-xs text-slate-300">
+                        <div class="w-9 h-9 rounded-xl bg-teal-950/80 border border-teal-800/60 flex items-center justify-center text-teal-400 shadow-inner flex-shrink-0">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        </div>
+                        <div>
+                            <span class="font-bold text-slate-200 block text-sm">Bảng điều khiển tác vụ lượng giá</span>
+                            <span id="footerStatus" class="text-slate-400 text-xs">Vui lòng hoàn thành đánh giá 15 lĩnh vực trước khi tính kết quả hoặc lưu mốc chính thức.</span>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 w-full lg:w-auto">
+                        <button onclick="calculateResults()" class="group relative flex items-center justify-center space-x-2 px-4 py-3 bg-teal-600 hover:bg-teal-500 text-white font-semibold rounded-xl text-xs shadow-lg shadow-teal-950/50 transition-all duration-200 hover:-translate-y-0.5 border border-teal-500/30">
+                            <div class="w-6 h-6 rounded-lg bg-white/20 flex items-center justify-center text-white transition group-hover:scale-110">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                            </div>
+                            <span class="tracking-wide">1. Tính Kết Quả</span>
+                        </button>
+
+                        <button onclick="saveMilestone()" class="group relative flex items-center justify-center space-x-2 px-4 py-3 bg-workspace-cardLight hover:bg-sky-600/30 text-slate-200 hover:text-sky-300 font-semibold rounded-xl text-xs shadow-md transition-all duration-200 hover:-translate-y-0.5 border border-workspace-border hover:border-sky-500/50">
+                            <div class="w-6 h-6 rounded-lg bg-sky-950/60 text-sky-400 flex items-center justify-center transition group-hover:scale-110 border border-sky-800/40">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/></svg>
+                            </div>
+                            <span class="tracking-wide">2. Lưu Mốc</span>
+                        </button>
+
+                        <button onclick="openMilestoneHistory()" class="group relative flex items-center justify-center space-x-2 px-4 py-3 bg-workspace-cardLight hover:bg-slate-700/70 text-slate-200 hover:text-teal-300 font-semibold rounded-xl text-xs shadow-md transition-all duration-200 hover:-translate-y-0.5 border border-workspace-border hover:border-teal-500/40">
+                            <div class="w-6 h-6 rounded-lg bg-workspace-card text-teal-400 flex items-center justify-center transition group-hover:scale-110 border border-workspace-border">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            </div>
+                            <span class="tracking-wide">3. Lịch Sử</span>
+                        </button>
+
+                        <button onclick="window.print()" class="group relative flex items-center justify-center space-x-2 px-4 py-3 bg-workspace-cardLight hover:bg-slate-700/70 text-slate-200 hover:text-teal-300 font-semibold rounded-xl text-xs shadow-md transition-all duration-200 hover:-translate-y-0.5 border border-workspace-border hover:border-teal-500/40">
+                            <div class="w-6 h-6 rounded-lg bg-workspace-card text-teal-400 flex items-center justify-center transition group-hover:scale-110 border border-workspace-border">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+                            </div>
+                            <span class="tracking-wide">4. In Báo Cáo</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <div id="resultModal" class="hidden bg-workspace-card border border-teal-500/50 rounded-2xl p-6 shadow-xl space-y-6 text-slate-100">
+                <div class="border-b border-workspace-border pb-4 flex justify-between items-center">
+                    <div>
+                        <span class="text-xs uppercase font-bold text-teal-400 tracking-wider">Báo cáo lượng giá lâm sàng CARS chuẩn hóa</span>
+                        <h3 class="text-2xl font-bold text-slate-100 mt-1">Báo Cáo Tổng Hợp Kết Quả & Định Hướng Can Thiệp</h3>
+                    </div>
+                    <button onclick="document.getElementById('resultModal').classList.add('hidden')" class="no-print text-slate-300 hover:text-white text-xs bg-workspace-cardLight px-3 py-1.5 rounded-lg border border-workspace-border font-medium">Đóng báo cáo</button>
+                </div>
+                
+                <div id="comprehensiveReportContent" class="space-y-6 text-sm text-slate-200">
+                    <!-- Nội dung chi tiết các mục báo cáo chuẩn hóa -->
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <div id="historyModal" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-workspace-card border border-workspace-border rounded-2xl w-full max-w-2xl p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto text-slate-100">
+            <div class="flex justify-between items-center border-b border-workspace-border pb-3">
+                <h3 class="text-lg font-bold text-teal-400">Lịch Sử Các Mốc Đánh Giá Chính Thức</h3>
+                <button onclick="document.getElementById('historyModal').classList.add('hidden')" class="text-slate-400 hover:text-white text-lg">&times;</button>
+            </div>
+            <div id="historyListContainer" class="space-y-3">
+                <!-- Danh sách mốc lịch sử -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const domains = [
+            { 
+                id: 1, 
+                name: "Quan hệ với mọi người", 
+                levels: { 
+                    1.0: "Không có biểu hiện khó khăn hoặc bất thường trong quan hệ với mọi người: Hành vi của trẻ tương ứng với tuổi. Có thể thấy được một số hiện tượng bẽn lẽn, nhắng nhít hoặc khó chịu khi bị yêu cầu làm việc gì, nhưng không ở mức độ điển hình", 
+                    2.0: "Quan hệ không bình thường ở mức độ nhẹ: Trẻ tránh tiếp xúc với người lớn bằng ánh mắt, tránh người lớn hoặc trở lên nhắng nhít nếu như có sự tác động, trở nên quá bẽn lẽn, không phản ứng với người lớn như bình thường, hoặc bám chặt vào bố mẹ nhiều hơn hầu hết trẻ cùng lứa tuổi.", 
+                    3.0: "Quan hệ không bình thường ở mức độ trung bình: Thỉnh thoảng trẻ thể hiện sự tách biệt (dường như không nhận thức được người lớn). Để thu hút sự chú ý của trẻ, đôi khi cần những nỗ lực liên tục và mạnh mẽ. Quan hệ tối thiểu được khởi đầu bởi trẻ.", 
+                    4.0: "Quan hệ không bình thường ở mức độ nặng: Trẻ luôn tách biệt hoặc không nhận thức được những việc người lớn đang làm. Trẻ hầu như không bao giờ đáp ứng hoặc khởi đầu mối quan hệ với người lớn. Chỉ có thể những nỗ lực liên tục nhất mới nhận được sự chú ý của trẻ." 
+                } 
+            },
+            { 
+                id: 2, 
+                name: "Bắt chước", 
+                levels: { 
+                    1.0: "Bắt chước đúng: Trẻ có thể bắt chước âm thanh, từ và các hành động phù hợp với khả năng của chúng.", 
+                    2.0: "Bắt chước không bình thường ở mức độ nhẹ: Trẻ thường bắt chước các hành vi đơn giản như vỗ tay hoặc các từ đơn, đôi khi trẻ chỉ bắt chước sau khi có sự khích lệ hoặc sau đôi chút trì hoãn.", 
+                    3.0: "Bắt chước không bình thường ở mức độ trung bình: Trẻ chỉ bắt chước một lúc nào đó và đòi hỏi cần có sự kiên trì và giúp đỡ của người lớn, thường xuyên chỉ bắt chước sau đôi chút trì hoãn.", 
+                    4.0: "Bắt chước không bình thường ở mức độ nặng: Trẻ rất ít khi hoặc không bao giờ bắt bước âm thanh, từ hoặc các hành động ngay cả khi có sự khích lệ và giúp đỡ của người lớn." 
+                } 
+            },
+            { 
+                id: 3, 
+                name: "Thể hiện tình cảm", 
+                levels: { 
+                    1.0: "Thể hiện tình cảm phù hợp với tuổi và phù hợp với tình huống: Trẻ thể hiện đúng với thể loại và mức độ tình cảm thông qua nét mặt, điệu bộ và thái độ.", 
+                    2.0: "Thể hiện tình cảm không bình thường ở mức độ nhẹ: Trẻ đôi khi thể hiện tình cảm không bình thường với thể loại và mức độ tình cảm. Phản ứng đôi khi không liên quan đến đối tượng hoặc sự việc xung quanh.", 
+                    3.0: "Thể hiện tình cảm không bình thường ở mức độ trung bình: Trẻ biểu hiện không bình thường với thể loại và hoặc mức độ tình cảm. Phản ứng của trẻ có thể khá hạn chế hoặc quá mức hoặc không liên quan đến tình huống, có thể là nhăn nhó, cười lớn, hoặc trở nên máy móc cho dù không có sự xuất hiện đối tượng hoặc sự việc gây xúc động.", 
+                    4.0: "Thể hiện tình cảm không bình thường ở mức độ nặng: Phản ứng của trẻ rất ít khi phù hợp với tình huống, khi trẻ đang ở một tâm trạng nào đó thì rất khó có thể thay đổi sang tâm trạng khác. Ngược lại, trẻ có thể thể hiện rất nhiều tâm trạng khác nhau khi không có sự thay đổi nào cả." 
+                } 
+            },
+            { 
+                id: 4, 
+                name: "Các động tác cơ thể", 
+                levels: { 
+                    1.0: "Thể hiện các động tác phù hợp với tuổi: Trẻ chuyển động thoải mái, nhanh nhẹ, và phối hợp các động tác như những trẻ khác cùng lứa tuổi.", 
+                    2.0: "Thể hiện các động tác không bình thường ở mức độ nhẹ: Trẻ đôi khi thể hiện một số biểu hiện khác thường nhỏ, ví dụ như vụng về, động tác diễn đi diễn lại, phối hợp giữa các động tác kém hoặc ít xuất hiện những cử động khác thường.", 
+                    3.0: "Thể hiện các tác động tác không bình thường ở mức độ nặng: Sự xuất hiện các biểu hiện nói trẻ một cách liên tục và mãnh liệt là biểu hiện của sự thể hiện các động tác không phù hợp ở mức độ nặng, cho dù có những cố gắng để hạn chế hoặc hướng trẻ và các hoạt động khác.", 
+                    4.0: "Thể hiện các động tác không bình thường ở mức độ nặng: Sự xuất hiện các biểu hiện nói trẻn một cách liên tục và mãnh liệt là biểu hiện của việc thể hiện các động tác không phù hợp ở mức độ nặng, cho dù có những cố gắng hạn chế hoặc hướng trẻ và các hoạt động khác." 
+                } 
+            },
+            { 
+                id: 5, 
+                name: "Sử dụng đồ vật", 
+                levels: { 
+                    1.0: "Sử dụng phù hợp và ham thích chơi với đồ chơi và các đồ vật khác: Trẻ thể hiện sự ham thích đồ chơi và các đồ vật khác phù hợp với khả năng và sử dụng những đồ chơi này đúng cách.", 
+                    2.0: "Không bình thường ở mức độ nhẹ trong những ham mê hoặc trong việc sử dụng đồ chơi và các đồ vật khác: Trẻ có thể thể hiện sự ham muốn không bình thường vào đồ chơi hoặc việc sử dụng những đồ chơi này không phù hợp với tính cách trẻ em (ví dụ như đập hoặc mút đồ chơi).", 
+                    3.0: "Không bình thường ở mức độ trung bình trong những ham mê hoặc trong việc sử dụng đồ chơi và các đồ vật khác: Trẻ có thể ít ham thích đến đồ chơi hoặc các đồ vật khác hoặc có thể chiếm giữ những đồ chơi hoặc các đồ vật khác hoặc có thể chiếm giữ những đồ chơi và các đồ vật khác một cách khác thường. Trẻ có thể tập chung vào một bộ phận không nổi bật của đồ chơi, bị thu hút vào không phản xạ ánh sáng, liên tục di chuyển một vài bộ phận của đồ vật hoặc chỉ chơi riêng với một đồ vật.", 
+                    4.0: "Không bình thường ở mức độ nặng trong những ham mê hoặc trong việc sử dụng đồ chơi và các đồ vật khác: Trẻ có thể có những hành tương tự như trên những mạnh hơn và thường xuyên hơn. Khi trẻ đã tham gia vào các hoạt động không phù hợp này, rất khó có thể tách trẻ ra khỏi chúng." 
+                } 
+            },
+            { 
+                id: 6, 
+                name: "Thích nghi với sự thay đổi", 
+                levels: { 
+                    1.0: "Phản ứng với sự thay đổi phù hợp với lứa tuổi: Trong khi trẻ có thể để ý hay bình luận về sự thay đổi thói quen, nó sãn sàng chấp nhận sự thay đổi này.", 
+                    2.0: "Thích nghi với sự thay đổi thói quen một cách bất thường ở mức độ nhẹ: Khi người lớn cố gắng tay đổi nhiệm vụ, có thể trẻ vẫn tiếp tục làm như cũ.", 
+                    3.0: "Thích nghi với sự thayd đổi bất thường ở mức độ trung bình: Trẻ chủ động từ chối thay đổi thói quen, cứ tiếp tục làm nhưu cũ và không muốn tách rời chúng. Trẻ có thể tức giận hay tỏ vẻ không hài lòng khi người lớn áp đặt thói quen.", 
+                    4.0: "Thích nghi với sự thay đổi một cách bất thường ỏ mức độ nặng: Trẻ phản ứng mạnh với sự thay đổi, thậm chí có thể rất tức giận hay bất hợp tác." 
+                } 
+            },
+            { 
+                id: 7, 
+                name: "Phản ứng thị giác", 
+                levels: { 
+                    1.0: "Sự phản ứng thị giác phù hợp với lứa tuổi: Hành vi của trẻ bình thường và phù hợp với lứa tuổi. Thị giác lúc này được sử dụng cùng với các giác quan khac để khám phá các đồ vật mới", 
+                    2.0: "Phản ứng bằng thị giác bất thường ở mức độ nhẹ: Thông thường trẻ phải được nhắc nhở nhìn vào đồ vật. Nó có thể thích thú khi nhìn vào gương hay chơi bật lửa hơn những trẻ khác. Hoặc trẻ có thể nhìn chằm chằm vào khoảng không, hay tránh nhìn vào mắt người khác.", 
+                    3.0: "Phản ứng bằng thị giác bất thường ở mức độ trung bình:Trẻ phải được nhắc nhở thường xuyên phải chú ý vào những gì nó đang làm. Trẻ có thể nhìn chằm chằm vào khoảng không, tránh nhìn vào mắt người khác, nhìn mọi vật một cách không bình thường hoặc giữ đồ vật rất gần mắt.", 
+                    4.0: "Phản ứng bằng thị giác một cách bất thường ở mức độ nặng: Trẻ nhất định không chịu nhìn mọi người hay đồ vật, mà biểu hiện những thái cực khác thường thị giác như đã được mô tả ở trên." 
+                } 
+            },
+            { 
+                id: 8, 
+                name: "Phản ứng thính giác", 
+                levels: { 
+                    1.0: "Thể hiện sự phản ứng bằng thính giác phù hợp: Các biểu hiện thính giác của trẻ bình thường và phù hợp với tuổi. Thính giác được dùng cùng với các giác quan khác.", 
+                    2.0: "Thể hiện sự phản ứng bằng thính giác không bình thường ở mức độ nhẹ: Trẻ đôi khi không phản ứng, hoặc hơi phản ứng với một số loại tiếng động. Phản ứng với âm thanh có thể chậm, tiếng động cần được lặp lại để gây được sự chú ý của trẻ. Trẻ có thể bị phân tán bởi âm thanh bên ngoài.", 
+                    3.0: "Thể hiện sự phản ứng bằng thính giác không bình thường ở mức độ trung bình: Phản ứng của trẻ với âm thanh có nhiều dạng: luôn bỏ qua tiếng động sau những lần nghe đầu tiên, có thể giật mình hoặc che tai khi nghe thấy những âm thanh thường ngày.", 
+                    4.0: "Thể hiện sự phản ứng bằng thính giác không bình thường ở mức độ nặng: Trẻ quá phản ứng hoặc phản ứng dưới mức bình thường với âm thanh ở một mức độ khác thường cho dù đó là loại âm thanh nào." 
+                } 
+            },
+            { 
+                id: 9, 
+                name: "Phản ứng vị giác, khứu giác & xúc giác", 
+                levels: { 
+                    1.0: "Việc sử dụng và sự phản ứng bằng các giác quan vị, khứu và xúc giác bình thường: Trẻ khám phá đồ vật mới một cách phù hợp với lứa tuổi, thông thường bằng nhìn và sờ mó vào đồ vật. Vị giác và khứu giác có thể được sử dụng khi cần. Khi bị đau nhẹ, trẻ có thể bực bội nhưng không phản ứng quá mức.", 
+                    2.0: "Việc sử dụng và sự phản ứng bằng các giác quan vị, khứu và xúc giác không bình thường ở mức độ nhẹ: Trẻ có thể khăng khăng đút đồ vật vào miệng, có thể ngửi hoặc nếm các đồ vật không được, có thể không để ý hoặc quá phản ứng với những đau đớn nhẹ mà những trẻ bình thường có thể thấy khó chịu.", 
+                    3.0: "Việc sử dụng và sự phản ứng bằng các giác quan vị, khứu và xúc giác không bình thường ở mức độ trung bình: Trẻ có thể bị khó chịu ở mức độ trung bình khi sờ, ngửi hoặc nếm đồ vật hoặc người. Trẻ có thể phản ứng quá mức hoặc dưới mức.", 
+                    4.0: "Việc sử dụng và sự phản ứng bằng các giác quan vị, khứu và xúc giác không bình thường ở mức độ nặng: Trẻ có thể giành lấy đồ vật mà ngửi hay nếm, sờ mó nhằm thỏa mãn các giác quan hơn là khám phá sự mới mẻ hay sự dụng đồ vật đó. Trẻ cũng có thể hoàn toàn phớt lờ khi bị đau hoặc có thể phản ứng dữ dội." 
+                } 
+            },
+            { 
+                id: 10, 
+                name: "Sợ hãi hoặc hồi hộp", 
+                levels: { 
+                    1.0: "Thể hiện sự sợ hãi và hồi hộp bình thường: Hành vi của trẻ phù hợp với tuổi và tình huống.", 
+                    2.0: "Thể hiện sự sợ hãi và hồi hộp không bình thường ở trẻ: Trẻ đôi khi thể hiện sự quá nhiều hoặc quá ít sự sợ hãi hoặc hồi hộp khi so sánh với những trẻ bình thường trong tình huống tương tự.", 
+                    3.0: "Thể hiện sự sợ hãi và hồi hộp không bình thường ở mức độ trung bình: Trẻ đặc biệt thể hiện sự sợ hãi hoặc hơi nhiều hoặc hơi ngay cả so với trẻ ít tháng hơn trong tình huống tương tự", 
+                    4.0: "Thể hiện sự sỡ hãi hoặc hồi hộp không bình thường ở mức độ nặng: Luôn sợ hãi ngay cả đã gặp lại những tình huống hoặc đồ vật vô hại. Rất khó làm trẻ bình tĩnh hoặc thoải mái. Ngược lại, trẻ khoogn thể hiện có được sự để ý cần thiết đối với nguy hại mà trẻ cùng tuổi có thể tránh được." 
+                } 
+            },
+            { 
+                id: 11, 
+                name: "Giao tiếp bằng lời", 
+                levels: { 
+                    1.0: "Giao tiếp bằng lời bình thường phù hợp với tuổi và tình huống.", 
+                    2.0: "Giao tiếp bằng lời không bình thường ở mức độ nhẹ: Nhìn chung, nói chậm. Hầu hết lời nói có ý nghĩa, tuy nhiên có thể xuất hiện sự lặp lại máy móc hoặc phát âm bị đảo lộn. Đôi khi trẻ dùng một số từ khác thường hoặc không rõ nghĩa.", 
+                    3.0: "Giao tiếp bằng lời không bình thường ở mức độ trung bình: Có thể trẻ không nói gì hoặc khi nói ngôn ngữ của trẻ có thể gồm những câu có ý nghĩa và cả những câu nói kì quặc kiểu như tiếng nói líu ríu khó hiểu hay đảo lộn từ bừa bãi. Sự kì quặc trong những câu nói có ý nghĩa có thể bao gồm cả việc hỏi quá nhiều hoặc tranh nói những gì trẻ thích.", 
+                    4.0: "Giao tiếp bằng lời không bình thường ở mức độ nặng: Trẻ chủ nói những câu vô nghĩa hoặc kêu ré lên kiểu trẻ con hay những âm thanh giống tiếng kêu của con vật. Có thể có những âm thanh phức tạp, những câu nói lấp lửng, biểu lộ sự cố chấp hay sử dụng một số từ và cụm từ rất khó hiểu." 
+                } 
+            },
+            { 
+                id: 12, 
+                name: "Giao tiếp không bằng lời", 
+                levels: { 
+                    1.0: "Giao tiếp không lời phù hợp với tuổi và tình huống.", 
+                    2.0: "Giao tiếp không lời không bình thường ở mức độ nhẹ: Dùng giao tiếp phi ngôn ngữ một cách non nớt, có thể chỉ trỏ một cách khó hiểu hay với lấy những gì nó muốn trong những tình huống mà một trẻ khác cùng tuổi có thể chỉ một cách cụ thể hơn để chỉ ra nó muốn cái gì.", 
+                    3.0: "Giao tiếp không lời không bình thường ở mức độ trung bình: Nhìn chung, nếu không dùng ngôn ngữ trẻ không thể diễn tả được mong muốn của mình và cũng không thể hiểu được hành vi giao tiếp phi ngôn ngữ của người khác.", 
+                    4.0: "Giao tiếp không lời không bình thường ở mức độ nặng: Trẻ chỉ sử dụng ngôn ngữ cử chỉ một cách kỳ quặc và không tỏ ra nhận biết được ý nghĩa cử chỉ hay sự biểu lộ nét mặt của người khác." 
+                } 
+            },
+            { 
+                id: 13, 
+                name: "Mức độ hoạt động", 
+                levels: { 
+                    1.0: "Mức độ hoạt động bình thường so với tuổi và tình huống: Trẻ không biểu hiện nhanh hơn hay chậm hơn trẻ cùng lứa tuổi trong tình huống tương tự.", 
+                    2.0: "Mức độ hoạt động không bình thường ở mức độ nhẹ: Trẻ đôi khi có thể luôn hiếu động hoặc có dấu hiệu lười và chậm chuyển động. Mức độ hoạt động của trẻ ảnh hưởng rất nhỏ đến kết quả hoạt động của trẻ.", 
+                    3.0: "Mức độ hoạt động không bình thường ở mức độ trung bình: Trẻ có thể rất hiếu động và khó có thể kiềm chế trẻ. Trẻ có thể hoạt động không biết mệt mỏi và có thể muốn không ngủ về đêm. Ngược lại, trẻ có thể khá mệt mỏi và cần phải thúc giục rất nhiều mới làm cho trẻ vận động.", 
+                    4.0: "Mức độ hoạt động không bình thường ở mức độ nặng: Trẻ thể hiện hoặc quá hiếu động hoặc quá thụ động và có thể chuyển từ trạng thái này sang trạng thái quá kia." 
+                } 
+            },
+            { 
+                id: 14, 
+                name: "Độ chuẩn trí tuệ", 
+                levels: { 
+                    1.0: "Mức độ hiểu biết tình bình thường và có sự nhất quán phù hợp trên các lĩnh vực: Trẻ có mức độ hiểu biết như những đứa trẻ bình thường và không có kỹ năng hiểu biết khác thường hoặc có vấn đề nào.", 
+                    2.0: "Trí thông minh không bình thường ở mức độ nhẹ: Trẻ không thông minh như những trẻ bình thường cùng lứa tuổi, kỹ năng hơi chậm trên các lĩnh vực.", 
+                    3.0: "Trí thông minh không bình thường ở mức độ trung bình: Nói chung, trẻ không thông minh như những trẻ bình thường cùng tuổi, tuy nhiên trẻ có thể có chức năng gần như bình thường đối với một số lĩnh vực có liên quan đến vận động trí não.", 
+                    4.0: "Trí thông minh không bình thường ở mức độ nặng: Trong khi trẻ thường không thông minh như những trẻ khác cùng lứa tuổi, trẻ có thể làm tốt hơn trẻ bình thường cùng tuổi trong một hoặc nhiều lĩnh vực." 
+                } 
+            },
+            { 
+                id: 15, 
+                name: "Ấn tượng chung", 
+                levels: { 
+                    1.0: "Không tự kỷ: Đứa trẻ không biểu lộ triệu chứng tự kỷ nào", 
+                    2.0: "Tự kỷ nhẹ: Đứa trẻ biểu lộ một vài triệu chứng hoặc chỉ tự kỷ mức độ nhẹ", 
+                    3.0: "Tự kỷ mức độ vừa: Trẻ biểu lộ một số triệu chứng hay tự kỷ ở mức độ tương đối", 
+                    4.0: "Tự kỷ nặng: Trẻ bộc lộ nhiều triệu chứng hay tự kỷ ở mức độ nặng" 
+                } 
+            }
+        ];
+
+        function renderDomains() {
+            const container = document.getElementById('domainsContainer');
+            let html = '';
+            const scores = [1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0];
+            const labels = {
+                1.0: "Mức độ bình thường",
+                1.5: "Giáp ranh (Bình thường & Nhẹ)",
+                2.0: "Mức độ nhẹ",
+                2.5: "Giáp ranh (Nhẹ & Trung bình)",
+                3.0: "Mức độ trung bình",
+                3.5: "Giáp ranh (Trung bình & Nặng)",
+                4.0: "Mức độ nặng"
+            };
+
+            domains.forEach(d => {
+                let optOpts = '<option value="" class="bg-workspace-card">-- Chọn mức điểm đánh giá --</option>';
+                scores.forEach(s => {
+                    optOpts += `<option value="${s}" class="bg-workspace-card">Mức ${s.toFixed(1)} - ${labels[s]}</option>`;
+                });
+
+                html += `
+                    <div class="bg-workspace-card border border-workspace-border rounded-2xl p-5 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between border-b border-workspace-border pb-3 mb-3">
+                                <h4 class="font-bold text-teal-300 text-sm">${d.id}. ${d.name}</h4>
+                                <span class="text-[10px] bg-workspace-cardLight px-2.5 py-1 rounded-full text-slate-300 border border-workspace-border font-medium">Thang 1.0 - 4.0</span>
+                            </div>
+                            <div class="space-y-1.5 mb-4 text-[11px] text-slate-300 bg-workspace-cardLight p-3 rounded-xl border border-workspace-border">
+                                <p><strong>1.0:</strong> ${d.levels[1.0]}</p>
+                                <p><strong>2.0:</strong> ${d.levels[2.0]}</p>
+                                <p><strong>3.0:</strong> ${d.levels[3.0]}</p>
+                                <p><strong>4.0:</strong> ${d.levels[4.0]}</p>
+                            </div>
+                        </div>
+                        <div class="space-y-2.5 pt-3 border-t border-workspace-border">
+                            <div>
+                                <label class="block text-[11px] font-semibold text-teal-300 mb-1">Mức điểm lâm sàng</label>
+                                <select id="score_${d.id}" class="w-full bg-workspace-cardLight border border-workspace-border rounded-xl px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-teal-500 font-medium">
+                                    ${optOpts}
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-semibold text-slate-300 mb-1">Ghi chú hành vi quan sát</label>
+                                <textarea id="note_${d.id}" rows="2" placeholder="Nhập ghi chú chi tiết hành vi lâm sàng..." class="w-full bg-workspace-cardLight border border-workspace-border rounded-xl px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-teal-500"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        function calculateAge() {
+            const dobVal = document.getElementById('childDOB').value;
+            if (!dobVal) return;
+            const dob = new Date(dobVal);
+            const today = new Date();
+            let years = today.getFullYear() - dob.getFullYear();
+            let months = today.getMonth() - dob.getMonth();
+            if (months < 0 || (months === 0 && today.getDate() < dob.getDate())) {
+                years--;
+                months += 12;
+            }
+            document.getElementById('childAge').value = `${years} tuổi ${months} tháng`;
+            saveDraft();
+        }
+
+        function collectFormData() {
+            let totalScore = 0;
+            let answeredCount = 0;
+            let details = [];
+
+            for (let i = 1; i <= 15; i++) {
+                const sEl = document.getElementById(`score_${i}`);
+                const nEl = document.getElementById(`note_${i}`);
+                const val = sEl.value !== "" ? parseFloat(sEl.value) : 0;
+                if (sEl.value !== "") answeredCount++;
+                totalScore += val;
+                
+                let scoreKey = Math.floor(val);
+                if (scoreKey < 1) scoreKey = 1;
+                if (scoreKey > 4) scoreKey = 4;
+                let matchedDesc = domains[i-1].levels[val] || domains[i-1].levels[scoreKey] || "Chưa có mô tả chi tiết.";
+
+                details.push({ 
+                    id: i, 
+                    name: domains[i-1].name, 
+                    score: val, 
+                    description: matchedDesc,
+                    note: nEl.value 
+                });
+            }
+
+            return {
+                childName: document.getElementById('childName').value || "Chưa cập nhật",
+                childCode: document.getElementById('childCode').value || "Chưa cập nhật",
+                childGender: document.getElementById('childGender').value || "Chưa cập nhật",
+                childDOB: document.getElementById('childDOB').value || "Chưa cập nhật",
+                childAge: document.getElementById('childAge').value || "Chưa cập nhật",
+                evalDate: document.getElementById('evalDate').value || new Date().toISOString().split('T')[0],
+                evaluatorName: document.getElementById('evaluatorName').value || "Chưa cập nhật",
+                totalScore,
+                answeredCount,
+                details
+            };
+        }
+
+        function getClassification(score) {
+            if (score <= 29.5) return { level: "Không tự kỷ", color: "text-emerald-400", bg: "bg-emerald-950/40 border-emerald-800" };
+            if (score >= 30 && score <= 35.5) return { level: "Tự kỷ nhẹ", color: "text-amber-400", bg: "bg-amber-950/40 border-amber-800" };
+            if (score >= 36 && score <= 47.5) return { level: "Tự kỷ nặng", color: "text-orange-400", bg: "bg-orange-950/40 border-orange-800" };
+            return { level: "Tự kỷ rất nặng", color: "text-red-400", bg: "bg-red-950/40 border-red-800" };
+        }
+
+        function calculateResults() {
+            const data = collectFormData();
+            if (data.answeredCount < 15) {
+                alert(`Bạn mới đánh giá ${data.answeredCount}/15 lĩnh vực. Vui lòng hoàn thành toàn bộ 15 lĩnh vực trước khi tính kết quả.`);
+                return;
+            }
+
+            const classification = getClassification(data.totalScore);
+            const savedHistory = JSON.parse(localStorage.getItem('cars_milestones') || '[]');
+            let prevMilestone = savedHistory.length > 0 ? savedHistory[savedHistory.length - 1] : null;
+
+            let topDomains = [...data.details].sort((a,b) => b.score - a.score);
+            let highestDomain = topDomains[0];
+            let lowestDomain = [...data.details].sort((a,b) => a.score - b.score)[0];
+
+            let clinicalConclusion = `BÁO CÁO LƯỢNG GIÁ LÂM SÀNG CHUYÊN SÂU - CARS SCALE\n\n`;
+            clinicalConclusion += `1. Nhận định lâm sàng tổng quát:\n`;
+            clinicalConclusion += `Thân chủ ${data.childName} (Mã HS: ${data.childCode}), ${data.childAge}, được lượng giá thông qua quan sát hành vi chuẩn hóa CARS tại thời điểm ${data.evalDate}. Tổng điểm đạt được là ${data.totalScore.toFixed(1)}/60, xếp loại: ${classification.level.toUpperCase()}.\n\n`;
+
+            if (data.totalScore <= 29.5) {
+                clinicalConclusion += `Kết quả cho thấy thân chủ nằm trong ngưỡng phát triển bình thường hoặc có một số biểu hiện khó khăn nhỏ chưa đạt tiêu chí rối loạn phổ tự kỷ. Các tương tác xã hội và phản ứng giác quan nhìn chung phù hợp với lứa tuổi.\n\n`;
+            } else if (data.totalScore <= 35.5) {
+                clinicalConclusion += `Kết quả phản ánh các triệu chứng tự kỷ ở mức độ nhẹ. Thân chủ bộc lộ rõ sự suy giảm tính tương hỗ trong quan hệ xã hội (Lĩnh vực nổi trội nhất: Mục ${highestDomain.id} - ${highestDomain.name} với mức điểm ${highestDomain.score.toFixed(1)}), đồng thời có độ nhạy cảm hoặc sự thích nghi với thay đổi môi trường còn hạn chế.\n\n`;
+            } else {
+                clinicalConclusion += `Kết quả ghi nhận các đặc trưng tự kỷ ở mức độ từ trung bình đến nặng. Thân chủ gặp khó khăn nghiêm trọng trong việc thiết lập giao tiếp tương hỗ, tương tác cảm xúc và các hành vi định hình rõ rệt (Đặc biệt chú ý tại Mục ${highestDomain.id} - ${highestDomain.name}, đạt ${highestDomain.score.toFixed(1)} điểm).\n\n`;
+            }
+
+            clinicalConclusion += `2. Phân tích điểm mạnh & điểm cần ưu tiên can thiệp:\n`;
+            clinicalConclusion += `- Lĩnh vực cần ưu tiên can thiệp hàng đầu: Mục ${highestDomain.id}. ${highestDomain.name} (Điểm số: ${highestDomain.score.toFixed(1)}).\n`;
+            clinicalConclusion += `- Lĩnh vực có thế mạnh/hoạt động ổn định hơn: Mục ${lowestDomain.id}. ${lowestDomain.name} (Điểm số: ${lowestDomain.score.toFixed(1)}).\n\n`;
+
+            clinicalConclusion += `3. Định hướng can thiệp đề xuất:\n`;
+            clinicalConclusion += `- Xây dựng chương trình can thiệp cá nhân hóa (IEP) tập trung sâu vào việc phát triển kỹ năng giao tiếp chủ động, cải thiện giao tiếp phi ngôn ngữ và tương tác mắt.\n`;
+            clinicalConclusion += `- Ứng dụng các liệu pháp điều hòa cảm giác (Sensory Integration) nhằm hỗ trợ thân chủ thích nghi tốt hơn với các kích thích môi trường và giảm thiểu các hành vi lặp lại.\n`;
+            clinicalConclusion += `- Phối hợp chặt chẽ giữa gia đình và chuyên viên lâm sàng để duy trì tính nhất quán trong phương pháp giáo dục hành vi tại nhà và môi trường học tập.`;
+
+            // ĐOẠN XỬ LÝ LÔ-GÍCH BIỂU ĐỒ HOÀN TOÀN DỰA TRÊN DỮ LIỆU THỰC TẾ (KHÔNG CÒN HARDCODE DỮ LIỆU MẪU)
+let chartPoints = [];
+if (savedHistory.length > 0) {
+    chartPoints = [...savedHistory];
+} else {
+    chartPoints = [{ evalDate: data.evalDate, totalScore: data.totalScore }];
+}
+
+            let svgWidth = 650;
+            let svgHeight = 180;
+            let paddingX = 45;
+            let paddingY = 25;
+            let usableWidth = svgWidth - (paddingX * 2);
+            let usableHeight = svgHeight - (paddingY * 2);
+
+            let polylinePoints = "";
+            // QUY TẮC NGHIÊM NGẶT: Chỉ khi có từ 2 mốc chính thức trở lên mới vẽ đường nối tiến trình
+            if (chartPoints.length >= 2) {
+                polylinePoints = chartPoints.map((m, idx) => {
+                    let x = paddingX + (idx / (chartPoints.length - 1)) * usableWidth;
+                    let scoreClamped = Math.max(15, Math.min(60, m.totalScore));
+                    let y = svgHeight - paddingY - ((scoreClamped - 15) / 45) * usableHeight;
+                    return `${x},${y}`;
+                }).join(" ");
+            }
+
+            let reportHtml = `
+                <div class="space-y-2">
+                    <h4 class="font-bold text-teal-400 text-xs uppercase tracking-wider">1. Thông Tin Hành Chính</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-workspace-cardLight p-4 rounded-xl border border-workspace-border">
+                        <div>
+                            <p class="text-xs text-slate-300">Thân chủ: <strong class="text-slate-100 text-sm">${data.childName}</strong> (${data.childCode})</p>
+                            <p class="text-xs text-slate-300 mt-1">Giới tính: <span class="text-slate-100">${data.childGender}</span> | Tuổi thực: <span class="text-teal-300 font-semibold">${data.childAge}</span> | Ngày sinh: <span class="text-slate-100">${data.childDOB}</span></p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-300">Ngày đánh giá: <span class="text-slate-100">${data.evalDate}</span></p>
+                            <p class="text-xs text-slate-300 mt-1">Chuyên viên đánh giá: <span class="text-slate-100">${data.evaluatorName}</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-2">
+                    <h4 class="font-bold text-teal-400 text-xs uppercase tracking-wider">2. Bảng Tóm Tắt Điểm Số 15 Lĩnh Vực</h4>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs bg-workspace-card shadow-sm" style="border-collapse: collapse; border: 1.5px solid #475569;">
+                            <thead>
+                                <tr class="bg-workspace-cardLight text-slate-300">
+                                    <th class="p-2.5 text-center w-12 font-semibold" style="border: 1px solid #475569;">Mục</th>
+                                    ${data.details.map(d => `<th class="p-2.5 text-center font-semibold" style="border: 1px solid #475569;">${d.id}</th>`).join('')}
+                                    <th class="p-2.5 text-center text-teal-300 font-bold" style="border: 1px solid #475569;">TỔNG ĐIỂM</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="text-slate-200">
+                                    <td class="p-2.5 text-center font-semibold text-slate-400 bg-workspace-cardLight" style="border: 1px solid #475569;">Điểm</td>
+                                    ${data.details.map(d => `<td class="p-2.5 text-center font-medium" style="border: 1px solid #475569;">${d.score.toFixed(1)}</td>`).join('')}
+                                    <td class="p-2.5 text-center font-bold text-teal-300 text-sm bg-teal-950/50" style="border: 1px solid #475569;">${data.totalScore.toFixed(1)}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="space-y-2">
+                    <h4 class="font-bold text-teal-400 text-xs uppercase tracking-wider">3. Phân Loại Mức Độ Tự Kỷ (CARS Scale)</h4>
+                    <div class="bg-workspace-cardLight border border-workspace-border rounded-xl overflow-hidden text-xs shadow-sm">
+                        <div class="grid grid-cols-4 border-b border-workspace-border bg-workspace-card text-center font-semibold text-slate-300">
+                            <div class="p-2.5 border-r border-workspace-border">15.0 – 29.5 Điểm</div>
+                            <div class="p-2.5 border-r border-workspace-border">30.0 – 35.5 Điểm</div>
+                            <div class="p-2.5 border-r border-workspace-border">36.0 – 47.5 Điểm</div>
+                            <div class="p-2.5">48.0 – 60.0 Điểm</div>
+                        </div>
+                        <div class="grid grid-cols-4 text-center font-bold">
+                            <div class="p-3 border-r border-workspace-border ${data.totalScore <= 29.5 ? 'bg-emerald-950/60 text-emerald-400 border-b-4 border-emerald-500' : 'text-slate-500'}">Không tự kỷ</div>
+                            <div class="p-3 border-r border-workspace-border ${data.totalScore >= 30 && data.totalScore <= 35.5 ? 'bg-amber-950/60 text-amber-400 border-b-4 border-amber-500' : 'text-slate-500'}">Tự kỷ nhẹ</div>
+                            <div class="p-3 border-r border-workspace-border ${data.totalScore >= 36 && data.totalScore <= 47.5 ? 'bg-orange-950/60 text-orange-400 border-b-4 border-orange-500' : 'text-slate-500'}">Tự kỷ nặng</div>
+                            <div class="p-3 ${data.totalScore >= 48 ? 'bg-red-950/60 text-red-400 border-b-4 border-red-500' : 'text-slate-500'}">Tự kỷ rất nặng</div>
+                        </div>
+                    </div>
+                    <p class="text-xs text-slate-300 italic text-center mt-1">Kết luận phân loại hiện tại: <strong class="${classification.color} text-sm">${classification.level}</strong> (Tổng điểm: ${data.totalScore.toFixed(1)} / 60)</p>
+                </div>
+
+                <div class="space-y-2">
+                    <h4 class="font-bold text-teal-400 text-xs uppercase tracking-wider">4. Biểu Đồ Tiến Trình Can Thiệp Dài Hạn</h4>
+                    <div class="bg-workspace-cardLight p-4 rounded-xl border border-workspace-border space-y-3 shadow-sm">
+                        <div class="flex justify-between items-center text-xs text-slate-300 border-b border-workspace-border pb-2">
+                            <span class="flex items-center gap-1.5 font-medium"><span class="w-3 h-0.5 bg-teal-400 inline-block"></span> Đường xu hướng tiến độ tổng điểm CARS (${chartPoints.length} mốc ghi nhận)</span>
+                            <span class="font-medium text-teal-300">Trục điểm chuẩn (15 – 60)</span>
+                        </div>
+                        
+                        <div class="relative bg-workspace-card rounded-xl border border-workspace-border p-4 overflow-x-auto shadow-inner">
+                            <svg viewBox="0 0 650 180" class="w-full h-48 overflow-visible">
+                                <line x1="45" y1="20" x2="620" y2="20" stroke="#334155" stroke-dasharray="4" />
+                                <line x1="45" y1="50" x2="620" y2="50" stroke="#334155" stroke-dasharray="4" />
+                                <line x1="45" y1="80" x2="620" y2="80" stroke="#334155" stroke-dasharray="4" />
+                                <line x1="45" y1="110" x2="620" y2="110" stroke="#334155" stroke-dasharray="4" />
+                                <line x1="45" y1="140" x2="620" y2="140" stroke="#334155" stroke-dasharray="4" />
+                                <line x1="45" y1="155" x2="620" y2="155" stroke="#475569" stroke-width="2" />
+
+                                <text x="37" y="24" font-size="10" fill="#94a3b8" text-anchor="end">60</text>
+                                <text x="37" y="54" font-size="10" fill="#94a3b8" text-anchor="end">50</text>
+                                <text x="37" y="84" font-size="10" fill="#94a3b8" text-anchor="end">40</text>
+                                <text x="37" y="114" font-size="10" fill="#94a3b8" text-anchor="end">30</text>
+                                <text x="37" y="144" font-size="10" fill="#94a3b8" text-anchor="end">20</text>
+                                <text x="37" y="159" font-size="10" fill="#94a3b8" text-anchor="end">15</text>
+
+                                ${polylinePoints ? `<polyline fill="none" stroke="#14b8a6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" points="${polylinePoints}" />` : ''}
+
+                                ${chartPoints.map((m, idx) => {
+                                    let x = chartPoints.length === 1 ? svgWidth / 2 : paddingX + (idx / (chartPoints.length - 1)) * usableWidth;
+                                    let scoreClamped = Math.max(15, Math.min(60, m.totalScore));
+                                    let y = svgHeight - paddingY - ((scoreClamped - 15) / 45) * usableHeight;
+                                    let isLatest = (idx === chartPoints.length - 1);
+                                    return `
+                                        <g>
+                                            <circle cx="${x}" cy="${y}" r="${isLatest ? 6.5 : 5}" fill="${isLatest ? '#2dd4bf' : '#14b8a6'}" stroke="#0f172a" stroke-width="2" class="transition-all duration-300 hover:scale-125" />
+                                            <text x="${x}" y="${y - 10}" font-size="10" font-weight="bold" fill="${isLatest ? '#2dd4bf' : '#cbd5e1'}" text-anchor="middle">${m.totalScore}</text>
+                                            <text x="${x}" y="172" font-size="9" fill="#94a3b8" text-anchor="middle">${m.evalDate}</text>
+                                        </g>
+                                    `;
+                                }).join('')}
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-2">
+                    <h4 class="font-bold text-teal-400 text-xs uppercase tracking-wider">5. Bảng So Sánh Tiến Độ Chi Tiết (Mốc Trước Vs Mốc Gần Nhất)</h4>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs border border-workspace-border rounded-xl overflow-hidden bg-workspace-card shadow-sm">
+                            <thead>
+                                <tr class="bg-workspace-cardLight border-b border-workspace-border text-slate-300">
+                                    <th class="p-2.5 text-center w-12 font-semibold">STT</th>
+                                    <th class="p-2.5 font-semibold">Lĩnh vực đánh giá</th>
+                                    <th class="p-2.5 text-center font-semibold">Mốc Trước</th>
+                                    <th class="p-2.5 text-center font-semibold">Mốc Hiện Tại</th>
+                                    <th class="p-2.5 text-center font-semibold">Chênh Lệch</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${data.details.map((d, index) => {
+                                    let prevScore = prevMilestone && prevMilestone.details ? prevMilestone.details[index].score : d.score;
+                                    let diff = d.score - prevScore;
+                                    let diffText = diff === 0 ? "0.0 (Không đổi)" : (diff > 0 ? `+${diff.toFixed(1)} (Tăng)` : `${diff.toFixed(1)} (Giảm)`);
+                                    let diffColor = diff === 0 ? "text-slate-400" : (diff < 0 ? "text-emerald-400 font-semibold" : "text-amber-400 font-semibold");
+                                    return `
+                                        <tr class="border-b border-workspace-border text-slate-200 hover:bg-workspace-cardLight/50 transition">
+                                            <td class="p-2.5 text-center font-medium text-slate-400 bg-workspace-cardLight">${d.id}</td>
+                                            <td class="p-2.5 font-semibold text-teal-300">${d.name.toUpperCase()}</td>
+                                            <td class="p-2.5 text-center">${prevScore.toFixed(1)}</td>
+                                            <td class="p-2.5 text-center font-bold text-slate-100">${d.score.toFixed(1)}</td>
+                                            <td class="p-2.5 text-center ${diffColor}">${diffText}</td>
+                                        </tr>
+                                    `;
+                                }).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="space-y-2">
+                    <h4 class="font-bold text-teal-400 text-xs uppercase tracking-wider">6. Chi Tiết Lĩnh Vực Đánh Giá & Hành Vi Quan Sát</h4>
+                    <div class="space-y-3 max-h-80 overflow-y-auto pr-1">
+                        ${data.details.map(item => `
+                            <div class="bg-workspace-cardLight p-4 rounded-xl border border-workspace-border text-xs space-y-2 shadow-sm">
+                                <div class="flex justify-between items-center font-semibold text-teal-300 border-b border-workspace-border/50 pb-2">
+                                    <span class="text-sm">${item.id}. ${item.name}</span>
+                                    <span class="bg-workspace-card px-2.5 py-1 rounded-lg border border-workspace-border font-bold text-slate-100">Điểm đạt: ${item.score.toFixed(1)}</span>
+                                </div>
+                                <div>
+                                    <p class="text-[11px] font-semibold text-slate-300 uppercase tracking-wide">Mô tả định mức điểm số:</p>
+                                    <p class="text-slate-200 mt-0.5 bg-workspace-card p-2.5 rounded-lg border border-workspace-border/60 leading-relaxed">${item.description}</p>
+                                </div>
+                                <div>
+                                    <p class="text-[11px] font-semibold text-teal-300 uppercase tracking-wide">Ghi chú hành vi quan sát thực tế:</p>
+                                    <p class="text-slate-200 mt-0.5 italic">${item.note ? item.note : 'Không có ghi chú hành vi bổ sung tại mục này.'}</p>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <div class="space-y-2">
+                    <div class="flex justify-between items-center">
+                        <h4 class="font-bold text-teal-400 text-xs uppercase tracking-wider">7. Đánh Giá Chung & Định Hướng Khuyến Nghị Can Thiệp</h4>
+                        <span class="text-[10px] text-teal-300 font-medium italic bg-teal-950/60 px-2.5 py-1 rounded-lg border border-teal-800/60">Có thể chỉnh sửa trực tiếp trước khi in</span>
+                    </div>
+                    <div class="bg-workspace-cardLight border border-workspace-border p-4 rounded-xl space-y-2 shadow-sm">
+                        <textarea id="clinicalConclusion" rows="7" class="w-full bg-workspace-card border border-workspace-border rounded-xl p-3 text-xs text-slate-100 focus:outline-none focus:border-teal-500 leading-relaxed shadow-sm font-sans">${clinicalConclusion}</textarea>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('comprehensiveReportContent').innerHTML = reportHtml;
+            const modal = document.getElementById('resultModal');
+            modal.classList.remove('hidden');
+            modal.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function saveMilestone() {
+            const data = collectFormData();
+            if (data.answeredCount < 15) {
+                alert("Vui lòng hoàn thành đánh giá đủ 15 lĩnh vực trước khi lưu mốc chính thức.");
+                return;
+            }
+            data.classification = getClassification(data.totalScore);
+            
+            let history = JSON.parse(localStorage.getItem('cars_milestones') || '[]');
+            history.push(data);
+            localStorage.setItem('cars_milestones', JSON.stringify(history));
+            alert("Đã lưu mốc đánh giá chính thức thành công vào hệ thống lịch sử!");
+        }
+
+        function openMilestoneHistory() {
+            const history = JSON.parse(localStorage.getItem('cars_milestones') || '[]');
+            const container = document.getElementById('historyListContainer');
+            
+            if (history.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-400 italic text-center py-4">Chưa có mốc đánh giá chính thức nào được lưu.</p>`;
+            } else {
+                let html = '';
+                history.forEach((m, idx) => {
+                    html += `
+                        <div class="bg-workspace-cardLight p-3.5 rounded-xl border border-workspace-border flex justify-between items-center text-xs shadow-sm">
+                            <div>
+                                <p class="font-bold text-teal-300">Mốc ${idx + 1} - Ngày đánh giá: ${m.evalDate}</p>
+                                <p class="text-slate-300">Tổng điểm: <strong class="text-slate-100">${m.totalScore}</strong> (${m.classification.level})</p>
+                                <p class="text-[10px] text-slate-400">Chuyên viên: ${m.evaluatorName}</p>
+                            </div>
+                            <button onclick="deleteMilestone(${idx})" class="px-3 py-1.5 bg-red-950 hover:bg-red-900 text-red-300 rounded-lg transition font-medium border border-red-800">Xóa mốc</button>
+                        </div>
+                    `;
+                });
+                container.innerHTML = html;
+            }
+            document.getElementById('historyModal').classList.remove('hidden');
+        }
+
+        function deleteMilestone(index) {
+            if (confirm("Bạn có chắc chắn muốn xóa mốc lịch sử này không?")) {
+                let history = JSON.parse(localStorage.getItem('cars_milestones') || '[]');
+                history.splice(index, 1);
+                localStorage.setItem('cars_milestones', JSON.stringify(history));
+                openMilestoneHistory();
+            }
+        }
+
+        function saveDraft() {
+            const formData = {
+                childName: document.getElementById('childName').value,
+                childCode: document.getElementById('childCode').value,
+                childGender: document.getElementById('childGender').value,
+                childDOB: document.getElementById('childDOB').value,
+                evalDate: document.getElementById('evalDate').value,
+                evaluatorName: document.getElementById('evaluatorName').value,
+                scores: {},
+                notes: {}
+            };
+            for (let i = 1; i <= 15; i++) {
+                formData.scores[i] = document.getElementById(`score_${i}`).value;
+                formData.notes[i] = document.getElementById(`note_${i}`).value;
+            }
+            localStorage.setItem('cars_form_draft', JSON.stringify(formData));
+        }
+
+        function restoreDraft() {
+            const data = localStorage.getItem('cars_form_draft');
+            if (!data) {
+                alert('Không tìm thấy bản nháp nào.');
+                return;
+            }
+            const parsed = JSON.parse(data);
+            document.getElementById('childName').value = parsed.childName || '';
+            document.getElementById('childCode').value = parsed.childCode || '';
+            document.getElementById('childGender').value = parsed.childGender || '';
+            document.getElementById('childDOB').value = parsed.childDOB || '';
+            document.getElementById('evalDate').value = parsed.evalDate || '';
+            document.getElementById('evaluatorName').value = parsed.evaluatorName || '';
+            calculateAge();
+
+            for (let i = 1; i <= 15; i++) {
+                if (parsed.scores && parsed.scores[i]) document.getElementById(`score_${i}`).value = parsed.scores[i];
+                if (parsed.notes && parsed.notes[i]) document.getElementById(`note_${i}`).value = parsed.notes[i];
+            }
+            alert('Đã khôi phục bản nháp thành công!');
+        }
+
+        function clearDraft() {
+            if (confirm('Bạn có chắc chắn muốn xóa bản nháp này?')) {
+                localStorage.removeItem('cars_form_draft');
+                location.reload();
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            renderDomains();
+            const todayStr = new Date().toISOString().split('T')[0];
+            if (!document.getElementById('evalDate').value) {
+                document.getElementById('evalDate').value = todayStr;
+            }
+
+            document.querySelectorAll('input, select, textarea').forEach(el => {
+                el.addEventListener('input', saveDraft);
+                el.addEventListener('change', saveDraft);
+            });
+        });
+    </script>
+</body>
+</html>
