@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Về Người Sáng Lập — Codex Metrics</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-deep:#091118;
+    --bg-panel:#0f172a;
+    --accent:#2dd4bf;
+    --accent-soft:rgba(45,212,191,0.18);
+    --line:rgba(255,255,255,0.10);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg-deep);
+    color:#e7edf3;
+    font-family:'Plus Jakarta Sans', sans-serif;
+    overflow-x:hidden;
+  }
+  .font-display{ font-family:'Fraunces', serif; }
+
+  /* ---------- Background scene ---------- */
+  .bg-scene {
+    position: absolute; /* Thay vì fixed để ảnh trôi theo trang */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%; /* Trải dài toàn bộ chiều cao của trang */
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.bg-photo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%; /* Phủ kín toàn bộ không gian từ đầu đến cuối trang */
+    background-image: 
+        linear-gradient(180deg, rgba(9,17,24,0.86) 0%, rgba(9,17,24,0.72) 48%, rgba(9,17,24,0.94) 100%),
+        url('chillhouse1.jpg');
+    background-size: cover; /* Tự động co giãn ảnh phủ kín */
+    background-position: top center; /* Neo ảnh từ trên xuống để khi kéo không bị hụt nửa trên */
+    background-repeat: no-repeat;
+    opacity: 0.58;
+}
+  .glow-effect{
+    position:absolute; inset:0;
+    background:
+      radial-gradient(48% 38% at 78% 8%, rgba(45,212,191,0.16), transparent 60%),
+      radial-gradient(40% 32% at 8% 88%, rgba(56,102,255,0.14), transparent 60%);
+    mix-blend-mode:screen;
+  }
+  .grain{
+    position:absolute; inset:0; opacity:0.05;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ---------- Glass panels ---------- */
+  .glass{
+    background:linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+    backdrop-filter:blur(16px);
+    -webkit-backdrop-filter:blur(16px);
+    border:1px solid var(--line);
+    box-shadow:0 20px 60px -20px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.06);
+  }
+
+  /* ---------- Gradient rule for headings ---------- */
+  .rule-head{
+    position:relative; padding-left:1.25rem;
+  }
+  .rule-head::before{
+    content:''; position:absolute; left:0; top:0.15em; bottom:0.15em; width:3px;
+    background:linear-gradient(180deg, var(--accent), rgba(45,212,191,0));
+    border-radius:2px;
+  }
+
+  /* ---------- Top Navbar Links ---------- */
+  .nav-link{
+    position:relative; transition:color .25s ease;
+  }
+  .nav-link:hover{ color:#fff; }
+  .nav-link.active{
+    color:#2dd4bf;
+  }
+  .nav-link.active::after{
+    content:''; position:absolute; bottom:-6px; left:0; right:0; height:2px;
+    background:var(--accent); border-radius:2px;
+    box-shadow:0 0 8px var(--accent);
+  }
+
+  /* ---------- Scrollytelling reveal ---------- */
+  .reveal{
+    opacity:0; transform:translateY(36px);
+    transition:opacity .9s cubic-bezier(.22,1,.36,1), transform .9s cubic-bezier(.22,1,.36,1);
+  }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+
+  ::-webkit-scrollbar{ width:9px; }
+  ::-webkit-scrollbar-track{ background:transparent; }
+  ::-webkit-scrollbar-thumb{ background:rgba(255,255,255,0.12); border-radius:8px; }
+  ::-webkit-scrollbar-thumb:hover{ background:rgba(45,212,191,0.4); }
+
+  .cite{
+    font-family:'Fraunces', serif; font-style:italic; font-optical-sizing:auto;
+  }
+</style>
+</head>
+<body class="min-h-screen relative">
+
+<!-- ============ BACKGROUND ============ -->
+<div class="bg-scene">
+  <div class="bg-photo" id="bgPhoto"></div>
+  <div class="glow-effect"></div>
+  <div class="grain"></div>
+</div>
+
+<!-- ============= TOP NAVBAR (FIXED) ============= -->
+<header class="w-full px-6 lg:px-16 py-5 flex items-center justify-between border-b border-teal-700/20 fixed top-0 left-0 right-0 z-50 cinematic-glass transition-all duration-300">
+<!-- Logo bên trái -->
+<a href="index.html" class="flex items-center space-x-3 group cursor-pointer">
+    <div class="w-10 h-10 rounded-full border-2 border-teal-300/40 flex items-center justify-center bg-teal-900/40 backdrop-blur-md group-hover:scale-105 transition-transform">
+        <span class="text-teal-300 text-lg font-bold font-display">C</span>
+    </div>
+    <span class="text-white text-xl font-bold tracking-tight group-hover:text-teal-300 transition-colors">Codex Metrics</span>
+</a>
+    <!-- Nav Links (Desktop) ở giữa -->
+    <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-teal-100/90">
+        <a href="index.html" class="hover:text-white transition-colors">Trang chủ</a>
+        <a href="founder.html" class="hover:text-white transition-colors text-white font-semibold border-b border-teal-400 pb-0.5">Về người sáng lập</a>
+        <a href="Features.html" class="hover:text-white transition-colors">Blog</a>
+        <a href="Contact.html" class="hover:text-white transition-colors">Liên hệ</a>
+        <a href="Settings.html" class="hover:text-white transition-colors">Cài đặt</a>
+    </nav>
+
+    <!-- CTA Button ở bên phải -->
+    <div>
+        <a href="login.html" class="px-5 py-2.5 rounded-full bg-teal-500/10 hover:bg-teal-500/25 text-teal-300 text-sm font-medium border border-teal-500/30 backdrop-blur-3xl transition-all shadow-sm hover:shadow">
+            Đăng Nhập / Login
+        </a>
+    </div>
+</header>
+
+<!-- ============ MAIN CONTAINER (FULL-WIDTH) ============ -->
+<div class="relative z-10 flex flex-col min-h-screen pt-20">
+
+  <main class="flex-1 w-full max-w-6xl mx-auto px-6 sm:px-12 py-12">
+
+    <!-- ============ FOUNDER SPLIT-SCREEN HEADER SECTION ============ -->
+    <section class="mb-24 reveal" data-reveal>
+      <div class="text-center max-w-2xl mx-auto mb-14">
+        <span class="inline-flex items-center gap-2 text-[11px] tracking-[0.2em] uppercase text-teal-300 border border-teal-300/25 rounded-full px-3.5 py-1.5 mb-5">
+          <span class="w-1.5 h-1.5 rounded-full bg-teal-300"></span>
+          Câu chuyện người sáng lập
+        </span>
+        <h1 class="font-display text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-white leading-tight mb-4">
+    Tâm huyết đằng sau <span class="text-teal-300 italic">Codex Metrics</span>
+</h1>
+<p class="text-lg md:text-xl text-slate-300 font-normal max-w-2xl mx-auto leading-relaxed mb-6">
+    Từ những bước chân bỡ ngỡ ban đầu đến trăn trở số hóa nghề lâm sàng
+</p>
+        <p class="text-slate-300 text-[15px] sm:text-base leading-relaxed">
+          Nơi khoa học xã hội và lâm sàng giao thoa cùng sự thấu cảm, kiến tạo công cụ hỗ trợ thông minh cho hành trình chữa lành.
+        </p>
+      </div>
+
+      <!-- Split-screen Glass Card -->
+      <div class="glass rounded-3xl p-6 sm:p-10 grid md:grid-cols-12 gap-8 items-center border border-white/15">
+        <!-- Cột trái: Khung ảnh chuyên nghiệp chuẩn xác -->
+<div class="md:col-span-5 relative group flex flex-col items-center">
+    <!-- Hiệu ứng ánh sáng nền mờ ảo -->
+    <div class="absolute -inset-1 bg-gradient-to-r from-teal-500 to-blue-600 rounded-2xl blur-md opacity-30 group-hover:opacity-50 transition duration-500"></div>
+    
+    <!-- Khung thẻ chứa ảnh -->
+    <div class="relative w-full rounded-2xl overflow-hidden shadow-2xl ring-1 ring-teal-300/30 bg-teal-950/80 p-4 flex flex-col items-center space-y-4">
+        <!-- Khung ảnh chính dạng dọc tỉ lệ đẹp -->
+        <div class="w-full h-80 md:h-96 rounded-xl overflow-hidden relative">
+            <img src="Me.jpg" alt="Nguyễn Trường Giang" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500">
+        </div>
+        
+        <!-- Thông tin tên và chức vụ bên dưới ảnh -->
+        <div class="text-center space-y-1 pb-2">
+            <h3 class="text-teal-200 text-xl font-bold font-display tracking-wide">Nguyễn Trường Giang</h3>
+            <p class="text-teal-400 text-xs font-semibold uppercase tracking-wider">FOUNDER & B.ED.PSYCH</p>
+            <p class="text-slate-400 text-xs italic pt-2">"Lắng nghe từng biên độ nhỏ hành vi với tất cả sự chân thành."</p>
+        </div>
+    </div>
+</div>
+
+        <!-- Cột phải: Thông tin cá nhân & Sứ mệnh -->
+        <div class="md:col-span-7 space-y-6">
+          <div>
+            <span class="text-teal-300 text-xs tracking-widest uppercase font-semibold">Nhà sáng lập Codex Metrics</span>
+            <h2 class="font-display text-2xl sm:text-3xl text-white mt-1">Cử nhân Tâm lý học Giáo dục</h2>
+            <p class="text-slate-400 text-sm mt-1">Cựu thực tập sinh Khoa Tâm thần Bệnh viện Nhi Trung Ương & Bệnh viện Đại học Y Dược.</p>
+          </div>
+
+          <p class="text-slate-300 text-[15px] leading-relaxed">
+            Trước khi là một phần mềm, Codex Metrics từng là một câu hỏi lặng lẽ giữa phòng khám — nơi một người trẻ bỡ ngỡ học cách quan sát và trân trọng từng giá trị của sự thấu cảm trong giáo dục đặc biệt.
+          </p>
+
+          <div class="p-4 rounded-xl bg-white/[0.03] border border-white/10 italic text-sm text-teal-200/90 leading-relaxed border-l-2 border-l-teal-400">
+            "Liệu công nghệ có thể gánh bớt gánh nặng hành chính cùng những người thầy thuốc, nhà tâm lý và giáo dục, để họ trọn vẹn thời gian ôm ấp và thấu hiểu đứa trẻ?"
+          </div>
+
+          <div class="flex flex-wrap gap-3 pt-2 text-xs">
+            <span class="px-3 py-1 rounded-full bg-teal-500/10 border border-teal-500/20 text-teal-300">Đo lường hành vi</span>
+            <span class="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-300">Lâm sàng dọc</span>
+            <span class="px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300">Giáo dục đặc biệt</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SECTION 1 ============ -->
+    <section class="py-16">
+      <div class="max-w-4xl mx-auto reveal" data-reveal>
+        <div class="rule-head mb-8">
+          <span class="text-teal-300 text-[13px] tracking-[0.2em] uppercase font-medium">Phần 01</span>
+          <h2 class="font-display text-[clamp(1.6rem,3vw,2.3rem)] mt-1.5">Cơ duyên từ sự tình cờ, và lòng biết ơn những người thầy lớn</h2>
+        </div>
+
+        <div class="glass rounded-2xl p-7 sm:p-10 space-y-5 text-slate-300 leading-[1.85] text-[15px]">
+          <p>
+            Tôi tốt nghiệp Cử nhân Tâm lý học Giáo dục tại Học viện Quản lý Giáo dục, nhưng con đường ấy
+            không hề được định hình từ sớm. Có những thời điểm ban đầu, tôi từng là một người trẻ hoang hoải,
+            chưa từng nghĩ mình sẽ gắn bó sâu sắc với lĩnh vực chăm sóc sức khỏe tinh thần và giáo dục đặc biệt.
+          </p>
+          <p>
+            Sự may mắn đã mỉm cười khi tôi có cơ hội thực tập tại <span class="text-slate-100 font-medium">Khoa Tâm thần —
+            Bệnh viện Nhi Trung Ương</span> và <span class="text-slate-100 font-medium">Bệnh viện Đại học Y Dược (ĐHQGHN)</span>.
+            Chính trong những môi trường áp lực nhưng đầy tính nhân văn ấy, dưới sự dẫn dắt tận tụy, nghiêm khắc
+            nhưng đầy ân tình của các thầy cô và anh chị đi trước, ngọn lửa nghề trong tôi mới thực sự được thắp lên.
+          </p>
+          <p>
+            Từng bước một, tôi được mài giũa từ một kẻ còn nhiều bỡ ngỡ trở thành người biết lắng nghe, biết quan
+            sát từng biên độ hành vi dù là nhỏ nhất của trẻ, và biết trân trọng giá trị của sự thấu cảm. Sự trưởng
+            thành ấy, nói cho cùng, là món quà được kết tinh từ sự bao dung và chỉ dạy của những người đi trước.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SECTION 2 ============ -->
+    <section class="py-16">
+      <div class="max-w-4xl mx-auto reveal" data-reveal>
+        <div class="rule-head mb-8">
+          <span class="text-teal-300 text-[13px] tracking-[0.2em] uppercase font-medium">Phần 02</span>
+          <h2 class="font-display text-[clamp(1.6rem,3vw,2.3rem)] mt-1.5">Câu chuyện khởi nguồn của Codex Metrics</h2>
+        </div>
+
+        <div class="grid md:grid-cols-5 gap-6">
+          <div class="md:col-span-3 glass rounded-2xl p-7 sm:p-10 space-y-5 text-slate-300 leading-[1.85] text-[15px]">
+            <p>
+              Quá trình thực hành quan sát lâm sàng cho tôi những bài học không cuốn sách nào dạy hết được — nhưng
+              cũng để lại những trăn trở không nguôi. Mỗi lần ngồi đối diện với phụ huynh và trẻ, tôi chứng kiến các
+              chuyên gia tâm lý, bác sĩ, nhà trị liệu và đồng nghiệp của mình vẫn ngày ngày chìm trong núi giấy tờ
+              thủ công: dò từng con điểm, cộng dồn từng mục quan sát, đối chiếu ma trận bằng tay, rồi tự vẽ những
+              biểu đồ tiến trình dài hạn qua từng mốc can thiệp.
+            </p>
+            <p>
+              Áp lực thời gian đè nặng lên vai, nguy cơ sai sót số liệu luôn rình rập, còn khoảng thời gian quý giá
+              lẽ ra phải dành trọn cho việc ôm ấp, tương tác và thấu hiểu đứa trẻ thì lại bị bào mòn dần bởi những
+              tác vụ cơ học, lặp đi lặp lại.
+            </p>
+            <p class="cite text-teal-200 text-[17px] sm:text-lg pt-1">
+              "Liệu công nghệ có thể gánh bớt gánh nặng này cùng những người thầy thuốc, nhà tâm lý và giáo dục không?"
+            </p>
+            <p>
+              Từ chính nỗi trăn trở ấy, cùng nền tảng kiến thức về đo lường hành vi, Codex Metrics đã ra đời — không phải
+              một dự án lớn lao, mà là một <span class="text-slate-100 font-medium">"người trợ lý thầm lặng"</span>
+              được đúc kết từ mồ hôi, nước mắt và những bài học vỡ lòng trong phòng khám.
+            </p>
+          </div>
+
+          <div class="md:col-span-2 glass rounded-2xl p-7 sm:p-8 flex flex-col justify-center gap-6">
+            <div>
+              <p class="text-3xl font-display text-teal-300">15</p>
+              <p class="text-[13px] text-slate-400 mt-1 leading-relaxed">Mục quan sát hành vi được số hóa thay cho việc dò tay từng con điểm</p>
+            </div>
+            <div class="h-px bg-white/10"></div>
+            <div>
+              <p class="text-3xl font-display text-teal-300">1</p>
+              <p class="text-[13px] text-slate-400 mt-1 leading-relaxed">Mục tiêu duy nhất: sẻ chia bớt gánh nặng hành chính cho người hành nghề</p>
+            </div>
+            <div class="h-px bg-white/10"></div>
+            <div>
+              <p class="text-3xl font-display text-teal-300">0</p>
+              <p class="text-[13px] text-slate-400 mt-1 leading-relaxed">Sự thay thế con người — công nghệ chỉ hỗ trợ, không bao giờ quyết định</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SECTION 3 ============ -->
+    <section class="py-16">
+      <div class="max-w-4xl mx-auto reveal" data-reveal>
+        <div class="rule-head mb-8">
+          <span class="text-teal-300 text-[13px] tracking-[0.2em] uppercase font-medium">Phần 03</span>
+          <h2 class="font-display text-[clamp(1.6rem,3vw,2.3rem)] mt-1.5">Định hướng chuyên môn &amp; ranh giới trách nhiệm</h2>
+        </div>
+
+        <div class="glass rounded-2xl p-7 sm:p-10">
+          <p class="text-slate-300 leading-[1.85] text-[15px] mb-8">
+            Tâm niệm lớn nhất khi xây dựng Codex Metrics không phải là làm ra một sản phẩm công nghệ nổi bật, mà là giữ
+            được sự khiêm nhường và tôn trọng tuyệt đối tính nguyên bản của khoa học chuyên ngành. Phần mềm, dù được
+            thiết kế tinh vi đến đâu, cũng chỉ là một công cụ hỗ trợ kỹ thuật số độc lập, giúp tối ưu hóa quy trình
+            tổng hợp dữ liệu và quản trị biểu đồ tiến trình dài hạn (Longitudinal Dashboard) — và không bao giờ được
+            phép thay thế cho con người.
+          </p>
+
+          <div class="grid sm:grid-cols-3 gap-5">
+            <div class="rounded-xl border border-white/10 bg-white/[0.03] p-6">
+              <div class="w-9 h-9 rounded-lg bg-teal-400/10 border border-teal-300/25 flex items-center justify-center mb-4">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#5eead4" stroke-width="1.8"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/></svg>
+              </div>
+              <p class="text-slate-100 font-medium text-[14px] mb-2">Không chẩn đoán tự động</p>
+              <p class="text-slate-400 text-[13px] leading-relaxed">Codex Metrics không bao giờ thay thế kết luận chẩn đoán lâm sàng chính thức hay phác đồ điều trị từ cơ quan y tế, chuyên gia có thẩm quyền.</p>
+            </div>
+            <div class="rounded-xl border border-white/10 bg-white/[0.03] p-6">
+              <div class="w-9 h-9 rounded-lg bg-teal-400/10 border border-teal-300/25 flex items-center justify-center mb-4">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#5eead4" stroke-width="1.8"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+              </div>
+              <p class="text-slate-100 font-medium text-[14px] mb-2">Tôn trọng sở hữu trí tuệ</p>
+              <p class="text-slate-400 text-[13px] leading-relaxed">Chúng tôi tôn trọng tuyệt đối các phương pháp luận đánh giá hành vi theo tiêu chuẩn quốc tế; Codex Metrics chỉ là không gian số hóa giúp quy trình thực hành tinh gọn, minh bạch hơn.</p>
+            </div>
+            <div class="rounded-xl border border-white/10 bg-white/[0.03] p-6">
+              <div class="w-9 h-9 rounded-lg bg-teal-400/10 border border-teal-300/25 flex items-center justify-center mb-4">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#5eead4" stroke-width="1.8"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg>
+              </div>
+              <p class="text-slate-100 font-medium text-[14px] mb-2">Bảo mật tuyệt đối</p>
+              <p class="text-slate-400 text-[13px] leading-relaxed">Toàn bộ dữ liệu thân chủ luôn được đặt dưới sự kiểm soát chặt chẽ của nhà chuyên môn, thông qua kiến trúc lưu trữ cục bộ (LocalStorage), tuân thủ nghiêm ngặt quyền riêng tư và đạo đức hành nghề y khoa.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CLOSING / SIGNATURE ============ -->
+    <section class="py-20">
+      <div class="max-w-3xl mx-auto text-center reveal" data-reveal>
+        <p class="text-slate-300 leading-[1.85] text-[16px] mb-12">
+          Codex Metrics không chỉ là những dòng code hay các con số tính toán tự động. Nó là tấm lòng, là sự tri ân mà
+          một người từng đi qua bỡ ngỡ như tôi muốn gửi gắm lại cho cộng đồng y tế, tâm lý học và giáo dục đặc biệt —
+          những người hùng thầm lặng đang từng ngày kiên nhẫn thắp sáng tương lai cho những mảnh đời bé nhỏ.
+          <br><br>
+          Rất mong Codex Metrics sẽ trở thành một người bạn đồng hành tin cậy, ấm áp và chuẩn mực trên hành trình hành
+          nghề đầy cao quý nhưng cũng nhiều áp lực của bạn.
+        </p>
+
+        <div class="w-16 h-px bg-teal-300/40 mx-auto mb-8"></div>
+
+        <p class="text-slate-400 text-[13px] tracking-[0.15em] uppercase mb-3">Trân trọng</p>
+        <p class="font-display text-2xl sm:text-3xl text-slate-100 mb-2">Nguyễn Trường Giang</p>
+        <p class="text-slate-400 text-[13.5px]">Nhà sáng lập Codex Metrics</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="w-full max-w-6xl mx-auto px-6 sm:px-12 py-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-[12px] text-slate-500">
+    <p>© 2026 Codex Metrics Project. All rights reserved.</p>
+    <div class="flex items-center gap-6">
+      <a href="#" class="hover:text-teal-300 transition-colors">Privacy Policy</a>
+      <a href="#" class="hover:text-teal-300 transition-colors">Terms of Service</a>
+      <a href="#" class="hover:text-teal-300 transition-colors">Security</a>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  // ---------- Parallax background ----------
+  const bgPhoto = document.getElementById('bgPhoto');
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        const y = window.scrollY;
+        bgPhoto.style.transform = `translateY(${y * 0.12}px) scale(1.05)`;
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }, { passive: true });
+
+  // ---------- Scrollytelling reveal ----------
+  const revealEls = document.querySelectorAll('[data-reveal]');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('in'), i * 90);
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+  revealEls.forEach(el => io.observe(el));
+
+  // Reveal hero immediately on load
+  window.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.reveal')[0]?.classList.add('in');
+  });
+</script>
+</body>
+</html>
